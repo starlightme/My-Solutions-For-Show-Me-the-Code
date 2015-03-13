@@ -29,7 +29,11 @@ def write_xml(d):
     students = doc.createElement("students")
     root.appendChild(students)
     students.appendChild(doc.createComment('    学生信息表\n    "id" : [名字, 数学, 语文, 英文]'))
-    content = doc.createTextNode(str(d).encode('utf-8'))
+    for i in d:
+        d[i][0] = d[i][0].encode('utf-8')
+    d = str(d)
+    
+    content = doc.createTextNode()
     students.appendChild(content)
     f = file("student.xml","w")
     doc.writexml(f)
