@@ -6,8 +6,11 @@
 #xls -> json -> xml 是我的思路，当然也可以尝试下直接xls -> xml
 #主要还是比较看重json的应用。有时候感觉看了别人的代码，不自己用另一种方式实现，（即使变得复杂啰嗦）还是别人的代码
 
-
+#导入模块
 import xlrd
+#这个是系统自带的，如果安装lxml遇到问题可以使用这个
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
 
 
 def read_xls(filename):
@@ -18,10 +21,25 @@ def read_xls(filename):
     for i in range(nrows):
         d[str(i)] = table.row_values(i)[1:]  #取编号后的数据，以列表形式存在字典对应的值中
     return d
+ 
+def write_xml(d):
+    doc = minidom.Document()
+    root = doc.createElement("root")
+    doc.appendChild(root)
+    students = doc.createElement("students")
+    root.appendChild(students)
+    students.appendChild(doc.createComment('    学生信息表\n    "id" : [名字, 数学, 语文, 英文]'))
+    content = doc.createTextNode(str(d).encode('utf-8'))
+    students.appendChild(content)
+    f = file("student.xml","w")
+    doc.writexml(f)
+    f.close()
 
 
 def main():
-    print read_xls('student.xls')
+    d = read_xls('student.xls')
+    print d
+    write_xml(d)
 
 
 if __name__ == '__main__':
