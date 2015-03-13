@@ -19,7 +19,7 @@ def read_xls(filename):
     nrows = table.nrows
     d = {}
     for i in range(nrows):
-        d[str(i)] = table.row_values(i)[1:]  #取编号后的数据，以列表形式存在字典对应的值中
+        d[str(i+1)] = table.row_values(i)[1:]  #取编号后的数据，以列表形式存在字典对应的值中
     return d
  
 def write_xml(d):
@@ -31,9 +31,8 @@ def write_xml(d):
     students.appendChild(doc.createComment('    学生信息表\n    "id" : [名字, 数学, 语文, 英文]'))
     for i in d:
         d[i][0] = d[i][0].encode('utf-8')
-    d = str(d)
-    
-    content = doc.createTextNode()
+    #有一种无奈叫做我懒得玩了，python2你是个好人
+    content = doc.createTextNode(str(d))
     students.appendChild(content)
     f = file("student.xml","w")
     doc.writexml(f)
@@ -42,7 +41,7 @@ def write_xml(d):
 
 def main():
     d = read_xls('student.xls')
-    print d
+    print(d)
     write_xml(d)
 
 
