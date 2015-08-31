@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+{% endblock %}
+
+<h2>{{ get_flashed_messages()[0] }}</h2>
+<h2>{{ get_flashed_messages()[1] }}</h2>
+<h2>{{ get_flashed_messages()[2] }}</h2>
+</body>
+</html>
