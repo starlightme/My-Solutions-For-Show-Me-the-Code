@@ -1,44 +1,73 @@
-from flask import Flask , render_template, flash,request,abort
-from flask_bootstrap import  Bootstrap
+import os
+from flask import Flask, render_template, session, redirect, url_for
+from flask.ext.script import Manager
+from flask.ext.bootstrap import Bootstrap
+from flask.ext.moment import Moment
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField, TextAreaField
+from wtforms.validators import Required
+from flask.ext.sqlalchemy import SQLAlchemy
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-app.secret_key = '123 for fun ' # a password
-Bootstrap(app)
+app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+    'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
-@app.route('/')
-def hello_world():
-    flash("test")
-    return render_template("index.html")
+manager = Manager(app)
+bootstrap = Bootstrap(app)
+moment = Moment(app)
+db = SQLAlchemy(app)
 
-@app.route('/test')
-def test():
-    return  render_template("test.html")
+'''
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    users = db.relationship('User', backref='role', lazy='dynamic')
 
-@app.route('/login',methods=["POST"])
-def log_in():
-    flash("note success")
-    form = request.form
-    name = form.get('name')
-    message =form.get('message')
-    flash(name)
-    flash(message)
-    return  render_template("index.html")
+    def __repr__(self):
+        return '<Role %r>' % self.name
+'''
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64))
+    message = db.Column(db.String(64)) 
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+class NameForm(Form):
+    name = StringField('What is your name?', validators=[Required()])
+    message = TextAreaField('Please leave a message', validators=[Required()])
+    submit = SubmitField('Submit')
+
 
 @app.errorhandler(404)
-def error(e):
-    return  render_template("404.html")
+def page_not_found(e):
+    return render_template('404.html'), 404
 
-@app.route('/404')
-def e_test():
-    abort(404)
 
-@app.route('/users/<user_id>')
-def users(user_id):
-    if int(user_id) == 1:
-        return render_template("user.html")
-    else:
-        abort(404)
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+    if form.validate_on_submit():
+        user = User(username=form.name.data,message=form.message.data)
+        db.session.add(user)
+        session['name'] = form.name.data
+        return redirect(url_for('index'))
+    return render_template('index.html', form=form, array=User.query.all())
 
 if __name__ == '__main__':
-    app.run()
+    db.create_all()
+    manager.run()
