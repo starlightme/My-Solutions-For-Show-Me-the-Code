@@ -60,15 +60,18 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    array = User.query.all()
-    if not array:
-        flash('Here is no message,please leave some message.')
+    # array = User.query.all()
+    # if not array:
+    #     flash('Here is no message,please leave some message.')
     form = NameForm()
     if form.validate_on_submit():
         user = User(username=form.name.data,message=form.message.data)
         db.session.add(user)
-        session['name'] = form.name.data
+        #session['name'] = form.name.data
         return redirect(url_for('index'))
+    array = User.query.all()
+    if not array:
+        flash('Here is no message,please leave some message.')
     return render_template('index.html', form=form, array=array)
 
 
