@@ -1,29 +1,39 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% block styles %}
+    {{ super() }}
+    <style type="text/css">
+        .badge {
+            color: #fff;
+            background-color: #1e90ff;
+        }
+    </style>
+{% endblock %}
+
+
 {% block title %}Message Board{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-<!--     {% if name %}
-        <h3>{{ name }}</h3>
-    {% endif %}
-    {% if message %} 
-      <p>test</p> 
-    {% endif %} -->
-<!--     {% for i in L %}
-      <h1>{{ i }}</h1>
-    {% endfor %} -->
-
-<!--     {% if not known %}
-    <p>Pleased to meet you!</p>
-    {% else %}
-    <p>Happy to see you again!</p>
-    {% endif %} -->
-    {% for i in array %}
-      <h3> {{i.username}} </h3>
-      <p>  {{i.message}} </p>
-    {% endfor %}
+    <h1>Content</h1>
 </div>
+
+
+<div class="contianer-fluid">
+    <ul class="list-group">
+    {% for item in array %}
+      <li class="list-group-item">  {{item.message}}
+        <span class="badge">{{item.username}}</span>
+      </li>
+    {% endfor %}
+    </ul>
+</div>
+
+<!-- {% for i in array %}
+  <h3> {{i.username}} </h3>
+  <p>  {{i.message}} </p>
+{% endfor %} -->
+
 {{ wtf.quick_form(form) }}
 {% endblock %}

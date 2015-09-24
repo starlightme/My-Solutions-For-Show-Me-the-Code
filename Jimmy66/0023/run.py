@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, flash
 from flask.ext.script import Manager
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
@@ -60,13 +60,17 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    array = User.query.all()
+    if not array:
+        flash('Here is no message,please leave some message.')
     form = NameForm()
     if form.validate_on_submit():
         user = User(username=form.name.data,message=form.message.data)
         db.session.add(user)
         session['name'] = form.name.data
         return redirect(url_for('index'))
-    return render_template('index.html', form=form, array=User.query.all())
+    return render_template('index.html', form=form, array=array)
+
 
 if __name__ == '__main__':
     db.create_all()
