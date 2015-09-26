@@ -8,7 +8,7 @@ This is a collection of my solutions for show me the code python version.
 * Make a backup
 * Record and recommend some books helped me 
 
-#Problems
+#Missions
 [Python 练习册，每天一个小程序](https://github.com/Yixiaohan/show-me-the-code)
 
 #Reference
@@ -16,6 +16,8 @@ This is a collection of my solutions for show me the code python version.
 
 #Books
 *	《Pro Git》
+*	《Flask Web Development: Developing Web Applications with Python》
+
 
 #License
 Mozilla Public License 2
