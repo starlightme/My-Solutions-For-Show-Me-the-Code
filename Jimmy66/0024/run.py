@@ -28,6 +28,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mission = db.Column(db.String(64))
     status = db.Column(db.Integer)
+    current_time = db.Column(db.DateTime)
 
     def __repr__(self):
         return '<Todo %r>' % self.mission
@@ -70,6 +71,7 @@ def completed_mission(id):
 def uncompleted_mission(id):
     uncompleted_mission = Todo.query.get(id)
     uncompleted_mission.status = 0
+    uncompleted_mission.current_time = datetime.utcnow()  #Update edit time
     db.session.add(uncompleted_mission)
     return redirect(url_for('index'))    
 
@@ -77,13 +79,14 @@ def uncompleted_mission(id):
 def index():
     form = NameForm()
     if form.validate_on_submit():
-        record = Todo(mission=form.mission.data,status=0)
+        record = Todo(mission=form.mission.data,status=0,current_time=datetime.utcnow())
         db.session.add(record)
         return redirect(url_for('index'))
     array = Todo.query.all()
     if not array:
         flash('Here is no mission, you can add some.')
-    return render_template('index.html', form=form, array=array,current_time=datetime.utcnow())
+    return render_template('index.html', form=form, array=array)
+    # return render_template('index.html', form=form, array=array,current_time=datetime.utcnow())
 
 
 if __name__ == '__main__':

@@ -9,9 +9,6 @@
 
 
 
-<!-- <div class="header clearfix">
-  <h3 class="text-muted">Todo List</h3>
-</div> -->
 
 <div class="container">
     <div class="jumbotron">
@@ -37,11 +34,11 @@
                                   未完成
                                 {% endif %}
                               </td>
-                              <td style="width : 240px;">{{moment(current_time).format('LLL')}}</td>
+                              <td style="width : 240px;">{{moment(todo.current_time).format('LLL')}}</td>
                               {% if todo.status == 1 %}
-                                   <td><a href="/undone/{{ todo.id }}" class="btn btn-primary">Undone</a></td> 
+                                   <td style="width : 70px;"><a href="/undone/{{ todo.id }}" class="btn btn-primary">Undone</a></td> 
                               {% else %}
-                                  <td><a href="/done/{{ todo.id }}" class="btn btn-primary">Done</a></td>
+                                  <td style="width : 70px;"><a href="/done/{{ todo.id }}" class="btn btn-primary">Done</a></td>
                               {% endif %}
 
                               <td><a href="/delete/{{ todo.id }}" class="btn btn-danger">Delete</a></td>
