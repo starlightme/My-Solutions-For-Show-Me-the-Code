@@ -37,7 +37,7 @@
                                   未完成
                                 {% endif %}
                               </td>
-                              <td>时间</td>
+                              <td style="width : 240px;">{{moment(current_time).format('LLL')}}</td>
                               {% if todo.status == 1 %}
                                    <td><a href="/undone/{{ todo.id }}" class="btn btn-primary">Undone</a></td> 
                               {% else %}

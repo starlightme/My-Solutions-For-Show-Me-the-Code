@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Flask, render_template, session, redirect, url_for, flash ,abort
 from flask.ext.script import Manager
 from flask.ext.bootstrap import Bootstrap
@@ -82,7 +83,7 @@ def index():
     array = Todo.query.all()
     if not array:
         flash('Here is no mission, you can add some.')
-    return render_template('index.html', form=form, array=array)
+    return render_template('index.html', form=form, array=array,current_time=datetime.utcnow())
 
 
 if __name__ == '__main__':
