@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+
+{% block title %}Message Board{% endblock %}
+
+{% block page_content %}
+
+
+
+<!-- <div class="header clearfix">
+  <h3 class="text-muted">Todo List</h3>
+</div> -->
+
+<div class="container">
+    <div class="jumbotron">
+      <div>
+          <h2>Todo List</h2>
+              <table class="table table-condensed">
+                  <thead>
+                      <tr>
+                          <th>content</th>
+                          <th>status</th>
+                          <th>time</th>
+                          <th>operate</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for todo in array %}
+                          <tr>
+                              <td>{{ todo.mission}}</td>
+                              <td>
+                                {% if todo.status == 1  %}
+                                  已完成
+                                {% else %}
+                                  未完成
+                                {% endif %}
+                              </td>
+                              <td>时间</td>
+                           <!--        <td><a href="" class="btn btn-primary">Undone</a></td> -->
+                                  <td><a href="/done/{{ todo.id }}" class="btn btn-primary">Done</a></td>
+                              <td><a href="/delete/{{ todo.id }}" class="btn btn-danger">Delete</a></td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              {{ wtf.quick_form(form) }}
+        </div>
+    </div> 
+</div>
+
+<footer class="footer">
+  <p>&copy; Jimmy66</p>
+</footer>
+
+
+
+{% endblock %}
