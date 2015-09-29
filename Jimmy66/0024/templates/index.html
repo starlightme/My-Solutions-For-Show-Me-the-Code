@@ -38,8 +38,12 @@
                                 {% endif %}
                               </td>
                               <td>时间</td>
-                           <!--        <td><a href="" class="btn btn-primary">Undone</a></td> -->
+                              {% if todo.status == 1 %}
+                                   <td><a href="/undone/{{ todo.id }}" class="btn btn-primary">Undone</a></td> 
+                              {% else %}
                                   <td><a href="/done/{{ todo.id }}" class="btn btn-primary">Done</a></td>
+                              {% endif %}
+
                               <td><a href="/delete/{{ todo.id }}" class="btn btn-danger">Delete</a></td>
                           </tr>
                       {% endfor %}

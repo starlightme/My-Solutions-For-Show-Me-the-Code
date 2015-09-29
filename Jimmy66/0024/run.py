@@ -59,11 +59,18 @@ def delete_mission(id):
     return redirect(url_for('index'))
 
 @app.route('/done/<int:id>')
-def complete_mission(id):
-    complete_mission = Todo.query.get(id)
-    complete_mission.status = 1
-    db.session.add(complete_mission)
+def completed_mission(id):
+    completed_mission = Todo.query.get(id)
+    completed_mission.status = 1
+    db.session.add(completed_mission)
     return redirect(url_for('index'))
+
+@app.route('/undone/<int:id>')
+def uncompleted_mission(id):
+    uncompleted_mission = Todo.query.get(id)
+    uncompleted_mission.status = 0
+    db.session.add(uncompleted_mission)
+    return redirect(url_for('index'))    
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
