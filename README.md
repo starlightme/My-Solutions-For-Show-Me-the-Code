@@ -3,8 +3,8 @@ This is a collection of my solutions for show me the code python version.
 
 #Reason
 
-* Add some problems that I think  is useful and intertsing
-* Practice Git until I can use it very skilled
+* Add some problems that I think  is useful and interesting
+* Practice Git until I can use it skillfully
 * Make a backup
 * Record and recommend some books helped me 
 
