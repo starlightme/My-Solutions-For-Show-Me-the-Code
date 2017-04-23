@@ -1,23 +1,23 @@
 # My-Solutions-For-Show-Me-the-Code
 This is a collection of my solutions for show me the code python version.
 
-#Reason
+# Reason
 
 * Add some problems that I think  is useful and interesting
 * Practice Git until I can use it skillfully
 * Make a backup
 * Record and recommend some books helped me 
 
-#Missions
+# Missions
 [Python 练习册，每天一个小程序](https://github.com/Yixiaohan/show-me-the-code)
 
-#Reference
+# Reference
 [show me the code](https://github.com/Show-Me-the-Code/python)
 
-#Books
+# Books
 *	《Pro Git》
 *	《Flask Web Development: Developing Web Applications with Python》
 
 
-#License
+# License
 Mozilla Public License 2
